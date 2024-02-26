@@ -45,7 +45,6 @@ void main() {
         },
       ];
 
-      // Stub the HTTP client to return a response
       when(() => mockHttpClient
               .get(Uri.parse('https://jsonplaceholder.typicode.com/users')))
           .thenAnswer(
@@ -69,7 +68,7 @@ void main() {
               .get(Uri.parse('https://jsonplaceholder.typicode.com/users')))
           .thenAnswer((_) async => http.Response('Not Found', 404));
 
-      // act & assert
+      // act && assert
       expect(userApiClient.fetchUsers(), throwsA(isA<Exception>()));
       verify(() => mockHttpClient.get(
           Uri.parse('https://jsonplaceholder.typicode.com/users'))).called(1);

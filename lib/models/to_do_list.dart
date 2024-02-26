@@ -28,7 +28,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
   Future<void> _fetchToDoItems() async {
     try {
       final response =
-          await http.get(Uri.parse('http://192.168.1.189:3001/toDo'));
+          await http.get(Uri.parse('http://192.168.1.3:3001/toDo'));
       if (response.statusCode == 200) {
         final responseBody = json.decode(response.body);
         if (responseBody is Map<String, dynamic> &&

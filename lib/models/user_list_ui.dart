@@ -10,6 +10,11 @@ class UserListPage extends StatefulWidget {
   @override
   // ignore: library_private_types_in_public_api
   _UserListPageState createState() => _UserListPageState();
+
+  // Add a static method to access fetchUsers
+  static Future<List<UserModel>> fetchUsers() async {
+    return _UserListPageState.fetchUsers();
+  }
 }
 
 class _UserListPageState extends State<UserListPage> {
@@ -21,7 +26,8 @@ class _UserListPageState extends State<UserListPage> {
     _futureUsers = fetchUsers();
   }
 
-  Future<List<UserModel>> fetchUsers() async {
+  // Define fetchUsers as a static method
+  static Future<List<UserModel>> fetchUsers() async {
     final response = await http.get(Uri.parse(
         "http://192.168.1.189:3001/users")); //change this part to your ip address
 

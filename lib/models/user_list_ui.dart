@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:activity2/models/user_models.dart';
 import 'package:activity2/models/user_details.dart';
 
@@ -13,21 +12,20 @@ class UserListPage extends StatefulWidget {
 }
 
 class _UserListPageState extends State<UserListPage> {
-  late Future<List<UserModel>> _futureUsers;
+  late Future<List<UserModel>> futureUsers;
 
   @override
   void initState() {
     super.initState();
-    _futureUsers = fetchUsers();
+    futureUsers = fetchUsers();
   }
 
   Future<List<UserModel>> fetchUsers() async {
     final response = await http.get(Uri.parse(
-        "http://192.168.1.3:3001/users")); //change this part to your ip address
+        "http://192.168.1.189:3001/users")); //change this part to your ip address
 
     if (response.statusCode == 200) {
-      List<dynamic> jsonResponse = json.decode(response.body);
-      return jsonResponse.map((data) => UserModel.fromJson(data)).toList();
+      return userModelFromJson(response.body);
     } else {
       throw Exception('Failed to load users');
     }
@@ -40,7 +38,7 @@ class _UserListPageState extends State<UserListPage> {
         title: const Text('User List'),
       ),
       body: FutureBuilder<List<UserModel>>(
-        future: _futureUsers,
+        future: futureUsers,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
